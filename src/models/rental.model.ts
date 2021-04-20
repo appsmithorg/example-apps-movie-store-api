@@ -10,6 +10,12 @@ export class Rental extends Entity {
   id?: number;
 
   @property({
+    type: 'string',
+    required: true,
+  })
+  status: string;
+
+  @property({
     type: 'date',
     required: true,
   })

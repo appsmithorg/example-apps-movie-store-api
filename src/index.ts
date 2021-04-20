@@ -1,3 +1,4 @@
+require('dotenv').config();
 import {ApplicationConfig, MovieStoreApplication} from './application';
 
 export * from './application';

@@ -3,23 +3,23 @@ import {Entity, model, property} from '@loopback/repository';
 @model()
 export class Store extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  manager_staff_id: number;
+  manager_staff_id: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  address_id: number;
+  address_id: string;
 
   @property({
     type: 'date',

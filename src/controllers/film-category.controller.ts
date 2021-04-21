@@ -107,7 +107,7 @@ export class FilmCategoryController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(FilmCategory, {exclude: 'where'})
     filter?: FilterExcludingWhere<FilmCategory>,
   ): Promise<FilmCategory> {
@@ -119,7 +119,7 @@ export class FilmCategoryController {
     description: 'FilmCategory PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -137,7 +137,7 @@ export class FilmCategoryController {
     description: 'FilmCategory PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() filmCategory: FilmCategory,
   ): Promise<void> {
     await this.filmCategoryRepository.replaceById(id, filmCategory);
@@ -147,7 +147,7 @@ export class FilmCategoryController {
   @response(204, {
     description: 'FilmCategory DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.filmCategoryRepository.deleteById(id);
   }
 }

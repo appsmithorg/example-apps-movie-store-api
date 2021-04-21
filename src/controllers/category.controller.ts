@@ -105,7 +105,7 @@ export class CategoryController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(Category, {exclude: 'where'})
     filter?: FilterExcludingWhere<Category>,
   ): Promise<Category> {
@@ -117,7 +117,7 @@ export class CategoryController {
     description: 'Category PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -135,7 +135,7 @@ export class CategoryController {
     description: 'Category PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() category: Category,
   ): Promise<void> {
     await this.categoryRepository.replaceById(id, category);
@@ -145,7 +145,7 @@ export class CategoryController {
   @response(204, {
     description: 'Category DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.categoryRepository.deleteById(id);
   }
 }

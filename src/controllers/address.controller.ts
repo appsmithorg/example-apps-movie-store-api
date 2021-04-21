@@ -105,7 +105,7 @@ export class AddressController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(Address, {exclude: 'where'})
     filter?: FilterExcludingWhere<Address>,
   ): Promise<Address> {
@@ -117,7 +117,7 @@ export class AddressController {
     description: 'Address PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -135,7 +135,7 @@ export class AddressController {
     description: 'Address PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() address: Address,
   ): Promise<void> {
     await this.addressRepository.replaceById(id, address);
@@ -145,7 +145,7 @@ export class AddressController {
   @response(204, {
     description: 'Address DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.addressRepository.deleteById(id);
   }
 }

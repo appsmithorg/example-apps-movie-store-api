@@ -3,11 +3,11 @@ import {Entity, model, property} from '@loopback/repository';
 @model()
 export class NicerButSlowerFilmList extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
     type: 'string',
@@ -51,7 +51,6 @@ export class NicerButSlowerFilmList extends Entity {
   })
   actors: string;
 
-
   constructor(data?: Partial<NicerButSlowerFilmList>) {
     super(data);
   }
@@ -61,4 +60,5 @@ export interface NicerButSlowerFilmListRelations {
   // describe navigational properties here
 }
 
-export type NicerButSlowerFilmListWithRelations = NicerButSlowerFilmList & NicerButSlowerFilmListRelations;
+export type NicerButSlowerFilmListWithRelations = NicerButSlowerFilmList &
+  NicerButSlowerFilmListRelations;

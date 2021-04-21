@@ -105,7 +105,7 @@ export class CountryController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(Country, {exclude: 'where'})
     filter?: FilterExcludingWhere<Country>,
   ): Promise<Country> {
@@ -117,7 +117,7 @@ export class CountryController {
     description: 'Country PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -135,7 +135,7 @@ export class CountryController {
     description: 'Country PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() country: Country,
   ): Promise<void> {
     await this.countryRepository.replaceById(id, country);
@@ -145,7 +145,7 @@ export class CountryController {
   @response(204, {
     description: 'Country DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.countryRepository.deleteById(id);
   }
 }

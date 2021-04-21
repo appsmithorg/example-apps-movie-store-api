@@ -103,7 +103,7 @@ export class StoreController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(Store, {exclude: 'where'})
     filter?: FilterExcludingWhere<Store>,
   ): Promise<Store> {
@@ -115,7 +115,7 @@ export class StoreController {
     description: 'Store PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -133,7 +133,7 @@ export class StoreController {
     description: 'Store PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() store: Store,
   ): Promise<void> {
     await this.storeRepository.replaceById(id, store);
@@ -143,7 +143,7 @@ export class StoreController {
   @response(204, {
     description: 'Store DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.storeRepository.deleteById(id);
   }
 }

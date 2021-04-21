@@ -3,11 +3,11 @@ import {Entity, model, property} from '@loopback/repository';
 @model()
 export class Film extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
     type: 'string',
@@ -28,10 +28,10 @@ export class Film extends Entity {
   release_year: number;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  language_id: number;
+  language_id: string;
 
   @property({
     type: 'number',
@@ -70,15 +70,14 @@ export class Film extends Entity {
   last_update?: string;
 
   @property({
-    type: 'array',
-    itemType: 'string',
+    type: 'string',
   })
-  special_features?: string[];
+  special_features?: string;
 
   @property({
-    type: 'object',
+    type: 'string',
   })
-  fulltext?: object;
+  fulltext?: string;
 
   constructor(data?: Partial<Film>) {
     super(data);

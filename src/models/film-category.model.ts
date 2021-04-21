@@ -3,17 +3,17 @@ import {Entity, model, property} from '@loopback/repository';
 @model()
 export class FilmCategory extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  category_id: number;
+  category_id: string;
 
   @property({
     type: 'date',

@@ -3,11 +3,11 @@ import {Entity, model, property} from '@loopback/repository';
 @model()
 export class StaffList extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
     type: 'string',
@@ -46,9 +46,9 @@ export class StaffList extends Entity {
   country?: string;
 
   @property({
-    type: 'number',
+    type: 'string',
   })
-  sid?: number;
+  sid?: string;
 
   constructor(data?: Partial<StaffList>) {
     super(data);

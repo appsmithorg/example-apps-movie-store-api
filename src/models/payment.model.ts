@@ -3,29 +3,29 @@ import {Entity, model, property} from '@loopback/repository';
 @model()
 export class Payment extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  customer_id: number;
+  customer_id: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  staff_id: number;
+  staff_id: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  rental_id?: number;
+  rental_id?: string;
 
   @property({
     type: 'number',

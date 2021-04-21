@@ -3,11 +3,11 @@ import {Entity, model, property} from '@loopback/repository';
 @model()
 export class Staff extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
     type: 'string',
@@ -22,10 +22,10 @@ export class Staff extends Entity {
   last_name: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  address_id: number;
+  address_id: string;
 
   @property({
     type: 'string',
@@ -34,10 +34,10 @@ export class Staff extends Entity {
   email: string;
 
   @property({
-    type: 'number',
+    type: 'string',
     required: true,
   })
-  store_id: number;
+  store_id: string;
 
   @property({
     type: 'boolean',

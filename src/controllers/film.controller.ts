@@ -1,4 +1,3 @@
-import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -8,24 +7,23 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  del,
+  post,
+  param,
   get,
   getModelSchemaRef,
-  param,
   patch,
-  post,
   put,
+  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Film} from '../models';
 import {FilmRepository} from '../repositories';
 
-@authenticate('jwt')
 export class FilmController {
   constructor(
     @repository(FilmRepository)
-    public filmRepository: FilmRepository,
+    public filmRepository : FilmRepository,
   ) {}
 
   @post('/films')
@@ -54,7 +52,9 @@ export class FilmController {
     description: 'Film model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(@param.where(Film) where?: Where<Film>): Promise<Count> {
+  async count(
+    @param.where(Film) where?: Where<Film>,
+  ): Promise<Count> {
     return this.filmRepository.count(where);
   }
 
@@ -70,7 +70,9 @@ export class FilmController {
       },
     },
   })
-  async find(@param.filter(Film) filter?: Filter<Film>): Promise<Film[]> {
+  async find(
+    @param.filter(Film) filter?: Filter<Film>,
+  ): Promise<Film[]> {
     return this.filmRepository.find(filter);
   }
 
@@ -103,8 +105,8 @@ export class FilmController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
-    @param.filter(Film, {exclude: 'where'}) filter?: FilterExcludingWhere<Film>,
+    @param.path.string('id') id: string,
+    @param.filter(Film, {exclude: 'where'}) filter?: FilterExcludingWhere<Film>
   ): Promise<Film> {
     return this.filmRepository.findById(id, filter);
   }
@@ -114,7 +116,7 @@ export class FilmController {
     description: 'Film PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -132,7 +134,7 @@ export class FilmController {
     description: 'Film PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() film: Film,
   ): Promise<void> {
     await this.filmRepository.replaceById(id, film);
@@ -142,7 +144,7 @@ export class FilmController {
   @response(204, {
     description: 'Film DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.filmRepository.deleteById(id);
   }
 }

@@ -18,8 +18,9 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
+import {MongoDataSource} from '../datasources';
 import {Rental} from '../models';
-import {RentalRepository} from '../repositories';
+import {InventoryRepository, RentalRepository} from '../repositories';
 
 @authenticate('jwt')
 export class RentalController {
@@ -46,7 +47,16 @@ export class RentalController {
     })
     rental: Omit<Rental, 'id'>,
   ): Promise<Rental> {
-    return this.rentalRepository.create(rental);
+    const invRep = new InventoryRepository(new MongoDataSource());
+    const inventory = await invRep.create({
+      store_id: '1',
+      film_id: rental.film_id,
+    });
+    return this.rentalRepository.create({
+      ...rental,
+      staff_id: '1',
+      inventory_id: inventory.id,
+    });
   }
 
   @get('/rentals/count')
@@ -103,7 +113,7 @@ export class RentalController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(Rental, {exclude: 'where'})
     filter?: FilterExcludingWhere<Rental>,
   ): Promise<Rental> {
@@ -115,7 +125,7 @@ export class RentalController {
     description: 'Rental PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -133,7 +143,7 @@ export class RentalController {
     description: 'Rental PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() rental: Rental,
   ): Promise<void> {
     await this.rentalRepository.replaceById(id, rental);
@@ -143,7 +153,7 @@ export class RentalController {
   @response(204, {
     description: 'Rental DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.rentalRepository.deleteById(id);
   }
 }

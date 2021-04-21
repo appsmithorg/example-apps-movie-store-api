@@ -103,7 +103,7 @@ export class CityController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(City, {exclude: 'where'}) filter?: FilterExcludingWhere<City>,
   ): Promise<City> {
     return this.cityRepository.findById(id, filter);
@@ -114,7 +114,7 @@ export class CityController {
     description: 'City PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -132,7 +132,7 @@ export class CityController {
     description: 'City PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() city: City,
   ): Promise<void> {
     await this.cityRepository.replaceById(id, city);
@@ -142,7 +142,7 @@ export class CityController {
   @response(204, {
     description: 'City DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.cityRepository.deleteById(id);
   }
 }

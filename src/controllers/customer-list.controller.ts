@@ -107,7 +107,7 @@ export class CustomerListController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(CustomerList, {exclude: 'where'})
     filter?: FilterExcludingWhere<CustomerList>,
   ): Promise<CustomerList> {
@@ -119,7 +119,7 @@ export class CustomerListController {
     description: 'CustomerList PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -137,7 +137,7 @@ export class CustomerListController {
     description: 'CustomerList PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() customerList: CustomerList,
   ): Promise<void> {
     await this.customerListRepository.replaceById(id, customerList);
@@ -147,7 +147,7 @@ export class CustomerListController {
   @response(204, {
     description: 'CustomerList DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.customerListRepository.deleteById(id);
   }
 }

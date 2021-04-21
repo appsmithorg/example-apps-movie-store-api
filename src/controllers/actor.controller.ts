@@ -103,7 +103,7 @@ export class ActorController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(Actor, {exclude: 'where'})
     filter?: FilterExcludingWhere<Actor>,
   ): Promise<Actor> {
@@ -115,7 +115,7 @@ export class ActorController {
     description: 'Actor PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -133,7 +133,7 @@ export class ActorController {
     description: 'Actor PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() actor: Actor,
   ): Promise<void> {
     await this.actorRepository.replaceById(id, actor);
@@ -143,7 +143,7 @@ export class ActorController {
   @response(204, {
     description: 'Actor DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.actorRepository.deleteById(id);
   }
 }

@@ -107,7 +107,7 @@ export class InventoryController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(Inventory, {exclude: 'where'})
     filter?: FilterExcludingWhere<Inventory>,
   ): Promise<Inventory> {
@@ -119,7 +119,7 @@ export class InventoryController {
     description: 'Inventory PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -137,7 +137,7 @@ export class InventoryController {
     description: 'Inventory PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() inventory: Inventory,
   ): Promise<void> {
     await this.inventoryRepository.replaceById(id, inventory);
@@ -147,7 +147,7 @@ export class InventoryController {
   @response(204, {
     description: 'Inventory DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.inventoryRepository.deleteById(id);
   }
 }

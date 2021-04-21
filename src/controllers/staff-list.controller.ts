@@ -107,7 +107,7 @@ export class StaffListController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(StaffList, {exclude: 'where'})
     filter?: FilterExcludingWhere<StaffList>,
   ): Promise<StaffList> {
@@ -119,7 +119,7 @@ export class StaffListController {
     description: 'StaffList PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -137,7 +137,7 @@ export class StaffListController {
     description: 'StaffList PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() staffList: StaffList,
   ): Promise<void> {
     await this.staffListRepository.replaceById(id, staffList);
@@ -147,7 +147,7 @@ export class StaffListController {
   @response(204, {
     description: 'StaffList DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.staffListRepository.deleteById(id);
   }
 }

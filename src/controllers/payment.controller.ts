@@ -105,7 +105,7 @@ export class PaymentController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(Payment, {exclude: 'where'})
     filter?: FilterExcludingWhere<Payment>,
   ): Promise<Payment> {
@@ -117,7 +117,7 @@ export class PaymentController {
     description: 'Payment PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -135,7 +135,7 @@ export class PaymentController {
     description: 'Payment PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() payment: Payment,
   ): Promise<void> {
     await this.paymentRepository.replaceById(id, payment);
@@ -145,7 +145,7 @@ export class PaymentController {
   @response(204, {
     description: 'Payment DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.paymentRepository.deleteById(id);
   }
 }

@@ -117,7 +117,7 @@ export class NicerButSlowerFilmListController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(NicerButSlowerFilmList, {exclude: 'where'})
     filter?: FilterExcludingWhere<NicerButSlowerFilmList>,
   ): Promise<NicerButSlowerFilmList> {
@@ -129,7 +129,7 @@ export class NicerButSlowerFilmListController {
     description: 'NicerButSlowerFilmList PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -150,7 +150,7 @@ export class NicerButSlowerFilmListController {
     description: 'NicerButSlowerFilmList PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() nicerButSlowerFilmList: NicerButSlowerFilmList,
   ): Promise<void> {
     await this.nicerButSlowerFilmListRepository.replaceById(
@@ -163,7 +163,7 @@ export class NicerButSlowerFilmListController {
   @response(204, {
     description: 'NicerButSlowerFilmList DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.nicerButSlowerFilmListRepository.deleteById(id);
   }
 }

@@ -3,11 +3,11 @@ import {Entity, model, property} from '@loopback/repository';
 @model()
 export class FilmList extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
     type: 'string',
@@ -50,7 +50,6 @@ export class FilmList extends Entity {
     required: true,
   })
   actors: string;
-
 
   constructor(data?: Partial<FilmList>) {
     super(data);

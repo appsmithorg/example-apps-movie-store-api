@@ -105,7 +105,7 @@ export class FilmListController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @param.filter(FilmList, {exclude: 'where'})
     filter?: FilterExcludingWhere<FilmList>,
   ): Promise<FilmList> {
@@ -117,7 +117,7 @@ export class FilmListController {
     description: 'FilmList PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -135,7 +135,7 @@ export class FilmListController {
     description: 'FilmList PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() filmList: FilmList,
   ): Promise<void> {
     await this.filmListRepository.replaceById(id, filmList);
@@ -145,7 +145,7 @@ export class FilmListController {
   @response(204, {
     description: 'FilmList DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.filmListRepository.deleteById(id);
   }
 }

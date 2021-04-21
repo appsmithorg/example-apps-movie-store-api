@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {CustomerList} from '../models';
 import {CustomerListRepository} from '../repositories';
 
+@authenticate('jwt')
 export class CustomerListController {
   constructor(
     @repository(CustomerListRepository)
-    public customerListRepository : CustomerListRepository,
+    public customerListRepository: CustomerListRepository,
   ) {}
 
   @post('/customer-lists')
@@ -106,7 +108,8 @@ export class CustomerListController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(CustomerList, {exclude: 'where'}) filter?: FilterExcludingWhere<CustomerList>
+    @param.filter(CustomerList, {exclude: 'where'})
+    filter?: FilterExcludingWhere<CustomerList>,
   ): Promise<CustomerList> {
     return this.customerListRepository.findById(id, filter);
   }

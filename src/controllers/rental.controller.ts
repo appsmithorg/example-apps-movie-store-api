@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Rental} from '../models';
 import {RentalRepository} from '../repositories';
 
+@authenticate('jwt')
 export class RentalController {
   constructor(
     @repository(RentalRepository)
-    public rentalRepository : RentalRepository,
+    public rentalRepository: RentalRepository,
   ) {}
 
   @post('/rentals')
@@ -52,9 +54,7 @@ export class RentalController {
     description: 'Rental model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Rental) where?: Where<Rental>,
-  ): Promise<Count> {
+  async count(@param.where(Rental) where?: Where<Rental>): Promise<Count> {
     return this.rentalRepository.count(where);
   }
 
@@ -70,9 +70,7 @@ export class RentalController {
       },
     },
   })
-  async find(
-    @param.filter(Rental) filter?: Filter<Rental>,
-  ): Promise<Rental[]> {
+  async find(@param.filter(Rental) filter?: Filter<Rental>): Promise<Rental[]> {
     return this.rentalRepository.find(filter);
   }
 
@@ -106,7 +104,8 @@ export class RentalController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Rental, {exclude: 'where'}) filter?: FilterExcludingWhere<Rental>
+    @param.filter(Rental, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Rental>,
   ): Promise<Rental> {
     return this.rentalRepository.findById(id, filter);
   }

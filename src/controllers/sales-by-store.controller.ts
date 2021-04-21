@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {SalesByStore} from '../models';
 import {SalesByStoreRepository} from '../repositories';
 
+@authenticate('jwt')
 export class SalesByStoreController {
   constructor(
     @repository(SalesByStoreRepository)
-    public salesByStoreRepository : SalesByStoreRepository,
+    public salesByStoreRepository: SalesByStoreRepository,
   ) {}
 
   @post('/sales-by-stores')
@@ -37,7 +39,6 @@ export class SalesByStoreController {
         'application/json': {
           schema: getModelSchemaRef(SalesByStore, {
             title: 'NewSalesByStore',
-            
           }),
         },
       },
@@ -106,7 +107,8 @@ export class SalesByStoreController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(SalesByStore, {exclude: 'where'}) filter?: FilterExcludingWhere<SalesByStore>
+    @param.filter(SalesByStore, {exclude: 'where'})
+    filter?: FilterExcludingWhere<SalesByStore>,
   ): Promise<SalesByStore> {
     return this.salesByStoreRepository.findById(id, filter);
   }

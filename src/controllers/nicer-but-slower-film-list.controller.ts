@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,29 +8,32 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {NicerButSlowerFilmList} from '../models';
 import {NicerButSlowerFilmListRepository} from '../repositories';
 
+@authenticate('jwt')
 export class NicerButSlowerFilmListController {
   constructor(
     @repository(NicerButSlowerFilmListRepository)
-    public nicerButSlowerFilmListRepository : NicerButSlowerFilmListRepository,
+    public nicerButSlowerFilmListRepository: NicerButSlowerFilmListRepository,
   ) {}
 
   @post('/nicer-but-slower-film-lists')
   @response(200, {
     description: 'NicerButSlowerFilmList model instance',
-    content: {'application/json': {schema: getModelSchemaRef(NicerButSlowerFilmList)}},
+    content: {
+      'application/json': {schema: getModelSchemaRef(NicerButSlowerFilmList)},
+    },
   })
   async create(
     @requestBody({
@@ -65,13 +69,16 @@ export class NicerButSlowerFilmListController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(NicerButSlowerFilmList, {includeRelations: true}),
+          items: getModelSchemaRef(NicerButSlowerFilmList, {
+            includeRelations: true,
+          }),
         },
       },
     },
   })
   async find(
-    @param.filter(NicerButSlowerFilmList) filter?: Filter<NicerButSlowerFilmList>,
+    @param.filter(NicerButSlowerFilmList)
+    filter?: Filter<NicerButSlowerFilmList>,
   ): Promise<NicerButSlowerFilmList[]> {
     return this.nicerButSlowerFilmListRepository.find(filter);
   }
@@ -92,7 +99,10 @@ export class NicerButSlowerFilmListController {
     nicerButSlowerFilmList: NicerButSlowerFilmList,
     @param.where(NicerButSlowerFilmList) where?: Where<NicerButSlowerFilmList>,
   ): Promise<Count> {
-    return this.nicerButSlowerFilmListRepository.updateAll(nicerButSlowerFilmList, where);
+    return this.nicerButSlowerFilmListRepository.updateAll(
+      nicerButSlowerFilmList,
+      where,
+    );
   }
 
   @get('/nicer-but-slower-film-lists/{id}')
@@ -100,13 +110,16 @@ export class NicerButSlowerFilmListController {
     description: 'NicerButSlowerFilmList model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(NicerButSlowerFilmList, {includeRelations: true}),
+        schema: getModelSchemaRef(NicerButSlowerFilmList, {
+          includeRelations: true,
+        }),
       },
     },
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(NicerButSlowerFilmList, {exclude: 'where'}) filter?: FilterExcludingWhere<NicerButSlowerFilmList>
+    @param.filter(NicerButSlowerFilmList, {exclude: 'where'})
+    filter?: FilterExcludingWhere<NicerButSlowerFilmList>,
   ): Promise<NicerButSlowerFilmList> {
     return this.nicerButSlowerFilmListRepository.findById(id, filter);
   }
@@ -126,7 +139,10 @@ export class NicerButSlowerFilmListController {
     })
     nicerButSlowerFilmList: NicerButSlowerFilmList,
   ): Promise<void> {
-    await this.nicerButSlowerFilmListRepository.updateById(id, nicerButSlowerFilmList);
+    await this.nicerButSlowerFilmListRepository.updateById(
+      id,
+      nicerButSlowerFilmList,
+    );
   }
 
   @put('/nicer-but-slower-film-lists/{id}')
@@ -137,7 +153,10 @@ export class NicerButSlowerFilmListController {
     @param.path.number('id') id: number,
     @requestBody() nicerButSlowerFilmList: NicerButSlowerFilmList,
   ): Promise<void> {
-    await this.nicerButSlowerFilmListRepository.replaceById(id, nicerButSlowerFilmList);
+    await this.nicerButSlowerFilmListRepository.replaceById(
+      id,
+      nicerButSlowerFilmList,
+    );
   }
 
   @del('/nicer-but-slower-film-lists/{id}')

@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {FilmActor} from '../models';
 import {FilmActorRepository} from '../repositories';
 
+@authenticate('jwt')
 export class FilmActorController {
   constructor(
     @repository(FilmActorRepository)
-    public filmActorRepository : FilmActorRepository,
+    public filmActorRepository: FilmActorRepository,
   ) {}
 
   @post('/film-actors')
@@ -106,7 +108,8 @@ export class FilmActorController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(FilmActor, {exclude: 'where'}) filter?: FilterExcludingWhere<FilmActor>
+    @param.filter(FilmActor, {exclude: 'where'})
+    filter?: FilterExcludingWhere<FilmActor>,
   ): Promise<FilmActor> {
     return this.filmActorRepository.findById(id, filter);
   }

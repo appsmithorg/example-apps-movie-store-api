@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Payment} from '../models';
 import {PaymentRepository} from '../repositories';
 
+@authenticate('jwt')
 export class PaymentController {
   constructor(
     @repository(PaymentRepository)
-    public paymentRepository : PaymentRepository,
+    public paymentRepository: PaymentRepository,
   ) {}
 
   @post('/payments')
@@ -52,9 +54,7 @@ export class PaymentController {
     description: 'Payment model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Payment) where?: Where<Payment>,
-  ): Promise<Count> {
+  async count(@param.where(Payment) where?: Where<Payment>): Promise<Count> {
     return this.paymentRepository.count(where);
   }
 
@@ -106,7 +106,8 @@ export class PaymentController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Payment, {exclude: 'where'}) filter?: FilterExcludingWhere<Payment>
+    @param.filter(Payment, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Payment>,
   ): Promise<Payment> {
     return this.paymentRepository.findById(id, filter);
   }

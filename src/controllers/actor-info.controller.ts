@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {ActorInfo} from '../models';
 import {ActorInfoRepository} from '../repositories';
 
+@authenticate('jwt')
 export class ActorInfoController {
   constructor(
     @repository(ActorInfoRepository)
-    public actorInfoRepository : ActorInfoRepository,
+    public actorInfoRepository: ActorInfoRepository,
   ) {}
 
   @post('/actor-infos')
@@ -106,7 +108,8 @@ export class ActorInfoController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(ActorInfo, {exclude: 'where'}) filter?: FilterExcludingWhere<ActorInfo>
+    @param.filter(ActorInfo, {exclude: 'where'})
+    filter?: FilterExcludingWhere<ActorInfo>,
   ): Promise<ActorInfo> {
     return this.actorInfoRepository.findById(id, filter);
   }

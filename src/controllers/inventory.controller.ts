@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Inventory} from '../models';
 import {InventoryRepository} from '../repositories';
 
+@authenticate('jwt')
 export class InventoryController {
   constructor(
     @repository(InventoryRepository)
-    public inventoryRepository : InventoryRepository,
+    public inventoryRepository: InventoryRepository,
   ) {}
 
   @post('/inventories')
@@ -106,7 +108,8 @@ export class InventoryController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Inventory, {exclude: 'where'}) filter?: FilterExcludingWhere<Inventory>
+    @param.filter(Inventory, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Inventory>,
   ): Promise<Inventory> {
     return this.inventoryRepository.findById(id, filter);
   }

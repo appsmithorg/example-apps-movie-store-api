@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Staff} from '../models';
 import {StaffRepository} from '../repositories';
 
+@authenticate('jwt')
 export class StaffController {
   constructor(
     @repository(StaffRepository)
-    public staffRepository : StaffRepository,
+    public staffRepository: StaffRepository,
   ) {}
 
   @post('/staff')
@@ -52,9 +54,7 @@ export class StaffController {
     description: 'Staff model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Staff) where?: Where<Staff>,
-  ): Promise<Count> {
+  async count(@param.where(Staff) where?: Where<Staff>): Promise<Count> {
     return this.staffRepository.count(where);
   }
 
@@ -70,9 +70,7 @@ export class StaffController {
       },
     },
   })
-  async find(
-    @param.filter(Staff) filter?: Filter<Staff>,
-  ): Promise<Staff[]> {
+  async find(@param.filter(Staff) filter?: Filter<Staff>): Promise<Staff[]> {
     return this.staffRepository.find(filter);
   }
 
@@ -106,7 +104,8 @@ export class StaffController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Staff, {exclude: 'where'}) filter?: FilterExcludingWhere<Staff>
+    @param.filter(Staff, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Staff>,
   ): Promise<Staff> {
     return this.staffRepository.findById(id, filter);
   }

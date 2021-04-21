@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Country} from '../models';
 import {CountryRepository} from '../repositories';
 
+@authenticate('jwt')
 export class CountryController {
   constructor(
     @repository(CountryRepository)
-    public countryRepository : CountryRepository,
+    public countryRepository: CountryRepository,
   ) {}
 
   @post('/countries')
@@ -52,9 +54,7 @@ export class CountryController {
     description: 'Country model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Country) where?: Where<Country>,
-  ): Promise<Count> {
+  async count(@param.where(Country) where?: Where<Country>): Promise<Count> {
     return this.countryRepository.count(where);
   }
 
@@ -106,7 +106,8 @@ export class CountryController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Country, {exclude: 'where'}) filter?: FilterExcludingWhere<Country>
+    @param.filter(Country, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Country>,
   ): Promise<Country> {
     return this.countryRepository.findById(id, filter);
   }

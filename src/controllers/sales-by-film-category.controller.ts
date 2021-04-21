@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,29 +8,32 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {SalesByFilmCategory} from '../models';
 import {SalesByFilmCategoryRepository} from '../repositories';
 
+@authenticate('jwt')
 export class SalesByFilmCategoryController {
   constructor(
     @repository(SalesByFilmCategoryRepository)
-    public salesByFilmCategoryRepository : SalesByFilmCategoryRepository,
+    public salesByFilmCategoryRepository: SalesByFilmCategoryRepository,
   ) {}
 
   @post('/sales-by-film-categories')
   @response(200, {
     description: 'SalesByFilmCategory model instance',
-    content: {'application/json': {schema: getModelSchemaRef(SalesByFilmCategory)}},
+    content: {
+      'application/json': {schema: getModelSchemaRef(SalesByFilmCategory)},
+    },
   })
   async create(
     @requestBody({
@@ -37,7 +41,6 @@ export class SalesByFilmCategoryController {
         'application/json': {
           schema: getModelSchemaRef(SalesByFilmCategory, {
             title: 'NewSalesByFilmCategory',
-            
           }),
         },
       },
@@ -65,7 +68,9 @@ export class SalesByFilmCategoryController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(SalesByFilmCategory, {includeRelations: true}),
+          items: getModelSchemaRef(SalesByFilmCategory, {
+            includeRelations: true,
+          }),
         },
       },
     },
@@ -92,7 +97,10 @@ export class SalesByFilmCategoryController {
     salesByFilmCategory: SalesByFilmCategory,
     @param.where(SalesByFilmCategory) where?: Where<SalesByFilmCategory>,
   ): Promise<Count> {
-    return this.salesByFilmCategoryRepository.updateAll(salesByFilmCategory, where);
+    return this.salesByFilmCategoryRepository.updateAll(
+      salesByFilmCategory,
+      where,
+    );
   }
 
   @get('/sales-by-film-categories/{id}')
@@ -100,13 +108,16 @@ export class SalesByFilmCategoryController {
     description: 'SalesByFilmCategory model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(SalesByFilmCategory, {includeRelations: true}),
+        schema: getModelSchemaRef(SalesByFilmCategory, {
+          includeRelations: true,
+        }),
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(SalesByFilmCategory, {exclude: 'where'}) filter?: FilterExcludingWhere<SalesByFilmCategory>
+    @param.filter(SalesByFilmCategory, {exclude: 'where'})
+    filter?: FilterExcludingWhere<SalesByFilmCategory>,
   ): Promise<SalesByFilmCategory> {
     return this.salesByFilmCategoryRepository.findById(id, filter);
   }
@@ -126,7 +137,10 @@ export class SalesByFilmCategoryController {
     })
     salesByFilmCategory: SalesByFilmCategory,
   ): Promise<void> {
-    await this.salesByFilmCategoryRepository.updateById(id, salesByFilmCategory);
+    await this.salesByFilmCategoryRepository.updateById(
+      id,
+      salesByFilmCategory,
+    );
   }
 
   @put('/sales-by-film-categories/{id}')
@@ -137,7 +151,10 @@ export class SalesByFilmCategoryController {
     @param.path.string('id') id: string,
     @requestBody() salesByFilmCategory: SalesByFilmCategory,
   ): Promise<void> {
-    await this.salesByFilmCategoryRepository.replaceById(id, salesByFilmCategory);
+    await this.salesByFilmCategoryRepository.replaceById(
+      id,
+      salesByFilmCategory,
+    );
   }
 
   @del('/sales-by-film-categories/{id}')

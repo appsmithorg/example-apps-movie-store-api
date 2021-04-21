@@ -21,3 +21,4 @@ export * from './sales-by-store.controller';
 export * from './staff-list.controller';
 export * from './staff.controller';
 export * from './store.controller';
+export * from './user.controller';

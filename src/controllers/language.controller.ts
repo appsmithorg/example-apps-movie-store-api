@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Language} from '../models';
 import {LanguageRepository} from '../repositories';
 
+@authenticate('jwt')
 export class LanguageController {
   constructor(
     @repository(LanguageRepository)
-    public languageRepository : LanguageRepository,
+    public languageRepository: LanguageRepository,
   ) {}
 
   @post('/languages')
@@ -52,9 +54,7 @@ export class LanguageController {
     description: 'Language model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Language) where?: Where<Language>,
-  ): Promise<Count> {
+  async count(@param.where(Language) where?: Where<Language>): Promise<Count> {
     return this.languageRepository.count(where);
   }
 
@@ -106,7 +106,8 @@ export class LanguageController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Language, {exclude: 'where'}) filter?: FilterExcludingWhere<Language>
+    @param.filter(Language, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Language>,
   ): Promise<Language> {
     return this.languageRepository.findById(id, filter);
   }

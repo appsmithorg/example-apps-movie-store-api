@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {FilmList} from '../models';
 import {FilmListRepository} from '../repositories';
 
+@authenticate('jwt')
 export class FilmListController {
   constructor(
     @repository(FilmListRepository)
-    public filmListRepository : FilmListRepository,
+    public filmListRepository: FilmListRepository,
   ) {}
 
   @post('/film-lists')
@@ -52,9 +54,7 @@ export class FilmListController {
     description: 'FilmList model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(FilmList) where?: Where<FilmList>,
-  ): Promise<Count> {
+  async count(@param.where(FilmList) where?: Where<FilmList>): Promise<Count> {
     return this.filmListRepository.count(where);
   }
 
@@ -106,7 +106,8 @@ export class FilmListController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(FilmList, {exclude: 'where'}) filter?: FilterExcludingWhere<FilmList>
+    @param.filter(FilmList, {exclude: 'where'})
+    filter?: FilterExcludingWhere<FilmList>,
   ): Promise<FilmList> {
     return this.filmListRepository.findById(id, filter);
   }

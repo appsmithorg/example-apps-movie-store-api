@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,23 +8,24 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Actor} from '../models';
 import {ActorRepository} from '../repositories';
 
+@authenticate('jwt')
 export class ActorController {
   constructor(
     @repository(ActorRepository)
-    public actorRepository : ActorRepository,
+    public actorRepository: ActorRepository,
   ) {}
 
   @post('/actors')
@@ -52,9 +54,7 @@ export class ActorController {
     description: 'Actor model count',
     content: {'application/json': {schema: CountSchema}},
   })
-  async count(
-    @param.where(Actor) where?: Where<Actor>,
-  ): Promise<Count> {
+  async count(@param.where(Actor) where?: Where<Actor>): Promise<Count> {
     return this.actorRepository.count(where);
   }
 
@@ -70,9 +70,7 @@ export class ActorController {
       },
     },
   })
-  async find(
-    @param.filter(Actor) filter?: Filter<Actor>,
-  ): Promise<Actor[]> {
+  async find(@param.filter(Actor) filter?: Filter<Actor>): Promise<Actor[]> {
     return this.actorRepository.find(filter);
   }
 
@@ -106,7 +104,8 @@ export class ActorController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.filter(Actor, {exclude: 'where'}) filter?: FilterExcludingWhere<Actor>
+    @param.filter(Actor, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Actor>,
   ): Promise<Actor> {
     return this.actorRepository.findById(id, filter);
   }

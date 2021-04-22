@@ -18,9 +18,8 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {MongoDataSource} from '../datasources';
 import {Rental} from '../models';
-import {InventoryRepository, RentalRepository} from '../repositories';
+import {RentalRepository} from '../repositories';
 
 @authenticate('jwt')
 export class RentalController {
@@ -47,16 +46,7 @@ export class RentalController {
     })
     rental: Omit<Rental, 'id'>,
   ): Promise<Rental> {
-    const invRep = new InventoryRepository(new MongoDataSource());
-    const inventory = await invRep.create({
-      store_id: '1',
-      film_id: rental.film_id,
-    });
-    return this.rentalRepository.create({
-      ...rental,
-      staff_id: '1',
-      inventory_id: inventory.id,
-    });
+    return this.rentalRepository.create(rental);
   }
 
   @get('/rentals/count')

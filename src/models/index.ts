@@ -10,7 +10,6 @@ export * from './film-actor.model';
 export * from './film-category.model';
 export * from './film-list.model';
 export * from './film.model';
-export * from './inventory.model';
 export * from './language.model';
 export * from './nicer-but-slower-film-list.model';
 export * from './payment.model';

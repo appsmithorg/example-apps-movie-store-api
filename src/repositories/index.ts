@@ -10,7 +10,6 @@ export * from './film-actor.repository';
 export * from './film-category.repository';
 export * from './film-list.repository';
 export * from './film.repository';
-export * from './inventory.repository';
 export * from './language.repository';
 export * from './nicer-but-slower-film-list.repository';
 export * from './payment.repository';

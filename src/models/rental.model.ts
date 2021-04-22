@@ -25,18 +25,13 @@ export class Rental extends Entity {
     type: 'string',
     required: true,
   })
-  film_id: string;
-
-  @property({
-    type: 'string',
-  })
-  inventory_id?: string;
+  film_title: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  customer_id: string;
+  customer_email: string;
 
   @property({
     type: 'date',

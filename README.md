@@ -1,5 +1,7 @@
 # movie_store
 
+> This repo is belongs to the tutorial at https://youtu.be/UuVK4qX_J64
+
 This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the
 [initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
 

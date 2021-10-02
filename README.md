@@ -1,13 +1,13 @@
 # movie_store
 
-> This repo is belongs to the tutorial at https://youtu.be/UuVK4qX_J64
+> This repo belongs to the tutorial at https://youtu.be/UuVK4qX_J64
 
-This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the
-[initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
+This application is generated using [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html) with the [initial project layout](https://loopback.io/doc/en/lb4/Loopback-application-layout.html).
 
 ## Install dependencies
 
 By default, dependencies were installed when this application was generated.
+
 Whenever dependencies in `package.json` are changed, run the following command:
 
 ```sh
@@ -26,13 +26,13 @@ Open http://127.0.0.1:3000 in your browser.
 
 ## Rebuild the project
 
-To incrementally build the project:
+To incrementally build the project, run the following command:
 
 ```sh
 yarn run build
 ```
 
-To force a full build by cleaning up cached artifacts:
+To force a full build by cleaning up cached artifacts, run the following command:
 
 ```sh
 yarn run rebuild
@@ -40,11 +40,13 @@ yarn run rebuild
 
 ## Fix code style and formatting issues
 
+To analyze the code style and formatting issues, run the following command:
+
 ```sh
 yarn run lint
 ```
 
-To automatically fix such issues:
+To automatically fix such issues, run the following command:
 
 ```sh
 yarn run lint:fix
@@ -65,7 +67,6 @@ yarn test
 
 ## What's next
 
-Please check out [LoopBack 4 documentation](https://loopback.io/doc/en/lb4/) to
-understand how you can continue to add features to this application.
+Please check out [LoopBack 4 documentation](https://loopback.io/doc/en/lb4/) to understand how you can continue to add features to this application.
 
 [![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
